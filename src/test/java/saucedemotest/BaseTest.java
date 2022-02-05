@@ -3,10 +3,7 @@ package saucedemotest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 import steps.PurchaseSteps;
 import web.pages.*;
@@ -24,25 +21,38 @@ public class BaseTest {
     protected PurchaseSteps purchaseSteps;
 
     protected SoftAssert softAssert = new SoftAssert();
-//    public static final String USERNAME = "standard_user";
- //   public static final String PASSWORD = "secret_sauce";
 
-       public static String USERNAME;
-      public static String PASSWORD ;
+  //  public static final String USERNAME = "standard_user";
+
+  //  public static final String PASSWORD = "secret_sauce";
+
+    public static String USERNAME;
+    public static String PASSWORD ;
 
     public static final String FIRST_NAME = "FIRST_NAME";
     public static final String LAST_NAME = "LAST_NAME";
     public static final String ZIP_CODE = "111";
 
-@BeforeSuite ( groups = "smoke")
-@Parameters({"user","passcode"})
-public void setupParamSuit(String user, String passcode)
-{
-    USERNAME= user;
-    PASSWORD= passcode;
-}
-    @BeforeClass (alwaysRun=true, groups = "smoke")
-    public void setup(){
+    @BeforeSuite ( groups = "smoke")
+    @Parameters({"user","passcode"})
+    public void setupParamSuit(@Optional  String user, @Optional String passcode) //передача параметров из xml
+    {
+        USERNAME= user;
+        PASSWORD= passcode;
+    }
+
+    /*    public void setupParams()  // задаем параметры через командную строку
+    {
+        USERNAME = System.getProperty("username");
+        System.out.println(USERNAME+"1111");
+        PASSWORD = System.getProperty("passcode");
+        System.out.println(PASSWORD+"22222");
+    }
+*/
+    @BeforeClass(alwaysRun = true, groups = "smoke")
+
+    public void setup() {
+      //  setupParams();// задаем параметры через командную строку
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--ignore-popup-blocking");
@@ -62,8 +72,7 @@ public void setupParamSuit(String user, String passcode)
     }
 
 
-
-    @AfterClass(alwaysRun=true)
+    @AfterClass(alwaysRun = true)
     public void teardown() {
         driver.close();
         driver.quit();

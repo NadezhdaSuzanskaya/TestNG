@@ -40,7 +40,7 @@ public class LoginTest extends BaseTest {
                 , act_message);
     }
 
-    @Test(groups = "smoke")
+    @Test( groups = "smoke")
     public void validCredentialsLoginTest() {
         Assert.assertNotNull(
                 loginPage

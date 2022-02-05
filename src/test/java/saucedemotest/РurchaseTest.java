@@ -22,6 +22,7 @@ public class РurchaseTest extends BaseTest {
         Assert.assertNotNull(
                 loginPage
                         .login(USERNAME, PASSWORD)
+                        //.login()
                         .open()
                         .isPageLoaded()
                 , "Catalog page is not loaded");
